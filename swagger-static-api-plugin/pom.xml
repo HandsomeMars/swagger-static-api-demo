@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>swagger-static-api-demo</artifactId>
+    <groupId>com.zyj</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.zyj</groupId>
+  <artifactId>swagger-static-api-plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>swagger-static-api-plugin</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+      <plugins>
+          <plugin>
+            <groupId>io.github.swagger2markup</groupId>
+            <artifactId>swagger2markup-maven-plugin</artifactId>
+            <version>1.3.1</version>
+            <configuration>
+              <!---swagger-api-json路径-->
+              <swaggerInput>http://127.0.0.1:8089/v2/api-docs</swaggerInput>
+              <!---swagger-api-转换生成路径-->
+              <outputFile>${project.build.directory}/docs/asciidoc/swagger</outputFile>
+              <!---文档生成配置参数-->
+              <config>
+                <swagger2markup.outputLanguage>ZH</swagger2markup.outputLanguage>
+                <swagger2markup.generatedExamplesEnabled>true</swagger2markup.generatedExamplesEnabled>
+                <swagger2markup.inlineSchemaEnabled>false</swagger2markup.inlineSchemaEnabled>
+                <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
+                <swagger2markup.markupLanguage>ASCIIDOC</swagger2markup.markupLanguage>
+              </config>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctor-maven-plugin</artifactId>
+            <version>1.5.8</version>
+            <configuration>
+              <!--asciidoc文件目录-->
+              <sourceDirectory>${project.build.directory}/docs/asciidoc/</sourceDirectory>
+              <!---生成html的路径-->
+              <outputDirectory>${project.build.directory}/docs/html/</outputDirectory>
+              <!---生成文档类型-->
+              <backend>html5</backend>
+              <sourceHighlighter>coderay</sourceHighlighter>
+              <attributes>
+                <!--导航栏在左-->
+                <toc>left</toc>
+                <!--显示层级数-->
+                <toclevels>3</toclevels>
+                <!--自动打数字序号-->
+                <sectnums>true</sectnums>
+              </attributes>
+            </configuration>
+          </plugin>
+      </plugins>
+  </build>
+</project>
